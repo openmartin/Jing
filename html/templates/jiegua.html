@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}六爻解卦{% endblock %}
+
+{% block content %}
+<div class="container col-lg-offset-1 col-lg-8">
+	<h3>解卦&nbsp;用神:{{liuyao_info.shen}}&nbsp;{{liuyao_info.month}}月&nbsp;{{liuyao_info.day}}日</h3>
+	<!-- 卦的基本信息 -->
+	<div class="row">
+	<table class="table table-condensed liuyaotable">
+		<thead>
+          <tr>
+            <th>#</th>
+            <th>伏神</th>
+            <th>本卦-{{liuyao_info.bengua}}({{liuyao_info.bengua_house}}宫)</th>
+            <th></th>
+            <th>变卦-{{liuyao_info.biangua}}({{liuyao_info.biangua_house}}宫)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gua in gua_table %}
+          <tr {% if gua.bengua_liuqin == liuyao_info.shen %}class="success"{% endif %} {% if gua.bengua_shiying == "世" %}class="danger"{% endif %} >
+            <td>{{gua.yao}}&nbsp;{{gua.gua}}</td>
+            <td>{{gua.bengua_fushen|default_if_none:""}}{{gua.bengua_funajia|default_if_none:""}}{{gua.bengua_fuwuxing|default_if_none:""}}</td>
+            <td>{{gua.bengua}}&nbsp;{{gua.bengua_liuqin}}{{gua.bengua_najia}}{{gua.bengua_wuxing}}&nbsp;&nbsp;{{gua.bengua_shiying|default_if_none:""}}</td>
+            <td>{{gua.bian}}</td>
+            <td>{{gua.biangua}}&nbsp;{{gua.biangua_liuqin}}{{gua.biangua_najia}}{{gua.biangua_wuxing}}&nbsp;&nbsp;{{gua.biangua_shiying|default_if_none:""}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+	</table>
+	</div>
+	<!-- 本卦力量强弱 -->
+	<div class="row">
+	<table class="table table-condensed liuyaotable">
+		<thead>
+          <tr>
+            <th>本卦</th>
+            <th>临月</th>
+            <th>临日</th>
+            <th>旬空</th>
+            <th>四时</th>
+            <th>月地支</th>
+            <th>月寄生</th>
+            <th>月五行</th>
+            <th>日地支</th>
+            <th>日寄生</th>
+            <th>日五行</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gua in bengua_table %}
+          <tr {% if gua.liuqin == liuyao_info.shen %}class="success"{% endif %} {% if gua.shiying == "世" %}class="danger"{% endif %} >
+            <td>{{gua.yao}}&nbsp;{{gua.gua}}&nbsp;{{gua.liuqin}}{{gua.najia}}{{gua.wuxing}}&nbsp;&nbsp;{{gua.shiying|default_if_none:""}}</td>
+            <td>{% if gua.linyue == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.linri == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.xunkong == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{{gua.sishi}}</td>
+            <td>{{gua.yuedizhi|join:"," }}</td>
+            <td>{{gua.yuejisheng}}</td>
+            <td>{{gua.yueshengke}}</td>
+            <td>{{gua.ridizhi|join:"," }}</td>
+            <td>{{gua.rijisheng}}</td>
+            <td>{{gua.rishengke}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+	</table>
+	</div>
+	<!-- 伏神力量强弱 -->
+	<div class="row">
+	<table class="table table-condensed liuyaotable">
+		<thead>
+          <tr>
+            <th>伏神</th>
+            <th>临月</th>
+            <th>临日</th>
+            <th>旬空</th>
+            <th>四时</th>
+            <th>月地支</th>
+            <th>月寄生</th>
+            <th>月五行</th>
+            <th>日地支</th>
+            <th>日寄生</th>
+            <th>日五行</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gua in fushen_table %}
+          <tr {% if gua.liuqin == liuyao_info.shen %}class="success"{% endif %} {% if gua.shiying == "世" %}class="danger"{% endif %} >
+            <td>{{gua.yao}}&nbsp;{{gua.gua}}&nbsp;{{gua.liuqin}}{{gua.najia}}{{gua.wuxing}}&nbsp;&nbsp;{{gua.shiying|default_if_none:""}}
+            	&nbsp;伏神&nbsp;{{gua.fushen|default_if_none:""}}{{gua.funajia|default_if_none:""}}{{gua.fuwuxing|default_if_none:""}}
+            </td>
+            <td>{% if gua.linyue == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.linri == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.xunkong == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{{gua.sishi}}</td>
+            <td>{{gua.yuedizhi|join:"," }}</td>
+            <td>{{gua.yuejisheng}}</td>
+            <td>{{gua.yueshengke}}</td>
+            <td>{{gua.ridizhi|join:"," }}</td>
+            <td>{{gua.rijisheng}}</td>
+            <td>{{gua.rishengke}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+	</table>
+	</div>
+	<!-- 变卦力量强弱 -->
+	<div class="row">
+	<table class="table table-condensed liuyaotable">
+		<thead>
+          <tr>
+            <th>变卦</th>
+            <th>临月</th>
+            <th>临日</th>
+            <th>旬空</th>
+            <th>四时</th>
+            <th>月地支</th>
+            <th>月寄生</th>
+            <th>月五行</th>
+            <th>日地支</th>
+            <th>日寄生</th>
+            <th>日五行</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gua in biangua_table %}
+          <tr {% if gua.liuqin == liuyao_info.shen %}class="success"{% endif %} {% if gua.shiying == "世" %}class="danger"{% endif %} >
+            <td>{{gua.yao}}&nbsp;{{gua.gua}}&nbsp;{{gua.liuqin}}{{gua.najia}}{{gua.wuxing}}&nbsp;&nbsp;{{gua.shiying|default_if_none:""}}
+            &nbsp;——>&nbsp;{{gua.biangua}}&nbsp;{{gua.biangua_liuqin}}{{gua.biangua_najia}}{{gua.biangua_wuxing}}
+            </td>
+            <td>{% if gua.linyue == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.linri == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{% if gua.xunkong == True %}<span class="glyphicon glyphicon-ok"></span>{% endif %}</td>
+            <td>{{gua.sishi}}</td>
+            <td>{{gua.yuedizhi|join:"," }}</td>
+            <td>{{gua.yuejisheng}}</td>
+            <td>{{gua.yueshengke}}</td>
+            <td>{{gua.ridizhi|join:"," }}</td>
+            <td>{{gua.rijisheng}}</td>
+            <td>{{gua.rishengke}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+	</table>
+	</div>
+</div>
+{% endblock %}

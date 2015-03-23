@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}古典占星-关于{% endblock %}
+
+{% block content %}
+<div class="container bs-docs-container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="bs-sidebar hidden-print affix-top" role="complementary">
+				<ul class="nav bs-sidenav">
+
+					<li>
+						<a href="#about">关于本站</a>
+						<ul class="nav">
+							<li>
+								<a href="#about-target">目标</a>
+							</li>
+							<li>
+								<a href="#about-source">本站源代码</a>
+							</li>
+							<li>
+								<a href="#about-run">如何在本机运行本程序</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#author">作者</a>
+					</li>
+					<li>
+						<a href="#astro">古典占星</a>
+					</li>
+			</div>
+		</div>
+		<div class="col-md-9" role="main">
+			<!-- Getting started
+			================================================== -->
+			<div class="bs-docs-section">
+				<div class="page-header">
+					<h1 id="about">关于本站</h1>
+				</div>
+				<p class="lead">
+					本站是一个在线星盘程序
+				</p>
+
+				<h3 id="about-target">目标</h3>
+				<p>
+					目前程序只实现了本命盘和流年盘两中星盘，后续会继续增加功能。
+				</p>
+				<p>
+					计划功能：法达星限，次限，三限，八字排盘
+				</p>
+
+				<h3 id="about-source">本站源代码</h3>
+				<p>
+					本站源代码开放，也希望爱好占星的人士能够贡献力量。
+				</p>
+
+				<div class="highlight">
+					<pre><code class="html"><span class="c">github 地址</span>	
+<span class="c">https://github.com/openmartin/astro_render.git</span></code></pre>
+				</div>
+
+				<h3 id="about-run">如何在本机运行本程序</h3>
+				<p>
+					本站使用Python语言开发，运行环境Python2.6，Django1.5
+				</p>
+				<div class="highlight">
+					<pre><code class="html"><span class="c">1.安装Python2.6</span>
+<span class="nt">http://www.python.org/download/releases/2.6.5/</span>
+						
+<span class="c">2.安装setuptools</span>
+<span class="nt">https://pypi.python.org/pypi/setuptools/0.6c11</span>
+
+<span class="c">3.然后安装pip</span>
+<span class="nt">http://www.pip-installer.org/en/latest/installing.html</span>
+
+<span class="c">4.安装依赖包</span>
+<span class="nt">pip install django==1.5 pytz socialoauth django-celery</span>
+
+<span class="c">6.运行</span>
+<span class="nt">python manage.py runserver 80</span>
+</code></pre>
+				</div>
+				<p>用浏览器打开 http://localhost 就可以看到本站了</p>
+			</div>
+
+			<!-- File structure
+			================================================== -->
+			<div class="bs-docs-section">
+				<div class="page-header">
+					<h1 id="author">作者</h1>
+				</div>
+				<p class="lead">
+					作者是一名会编程的占星爱好者，也是一名爱好占星的码农。
+				</p>
+				<p>有什么意见和想法可以通过微博联系我</p>
+				<p>
+					<a href="http://weibo.com/u/1196520075?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1196520075/b6468cd5/1.png"/></a>
+				</p>
+			</div>
+
+			<!-- Template
+			================================================== -->
+			<div class="bs-docs-section">
+				<div class="page-header">
+					<h1 id="astro">古典占星</h1>
+				</div>
+				<p class="lead">
+					
+				</p>
+
+				<p>
+					
+				</p>
+				
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+	$(document).ready(function() {
+		var $window = $(window);
+		var $body = $(document.body);
+
+		var navHeight = $('.navbar').outerHeight(true)+10;
+
+		$body.scrollspy({
+			target : '.bs-sidebar',
+			offset : navHeight
+		});
+
+		$window.on('load', function() {
+			$body.scrollspy('refresh');
+		});
+
+		$('.bs-docs-container [href=#]').click(function(e) {
+			e.preventDefault();
+		});
+
+		// back to top
+		setTimeout(function() {
+			var $sideBar = $('.bs-sidebar');
+
+			$sideBar.affix({
+				offset : {
+					/*top : function() {
+						var offsetTop = $sideBar.offset().top;
+						var sideBarMargin = parseInt($sideBar.children(0).css('margin-top'), 10);
+						var navOuterHeight = $('.bs-docs-nav').height();
+
+						return (this.top = offsetTop - navOuterHeight - sideBarMargin);
+					}, */
+					/*bottom : function() {
+						return (this.bottom = $('.bs-footer').outerHeight(true));
+					}*/
+				}
+			});
+		}, 100);
+
+	}); 
+</script>
+{% endblock %}
+

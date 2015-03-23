@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}古典占星-主页{% endblock %}
+
+{% block content %}
+<div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>古典占星</h1>
+        <p>by 占星师，for 占星师</p>
+        <p>全屏使用更大视野</p>
+        <p>
+          <a id="fsdemo" class="btn btn-lg btn-primary" href="#">全屏体验</a>
+        </p>
+      </div>
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/static/jquery.fullscreen-min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var url = "http://render.dailyastrology.info/demo";   
+	$("#fsdemo").click(function(e){
+		location.href=url;
+	});
+});
+</script>
+{% endblock %}

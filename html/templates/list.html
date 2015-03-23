@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}古典占星-我的资料{% endblock %}
+
+{% block content %}
+<div class="container col-lg-offset-1 col-lg-8">
+	<h3>我的资料</h3>
+	<table class="table table-condensed table-striped table-hover">
+		<thead>
+          <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>出生时间</th>
+            <th>星盘</th>
+            <th>编辑</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ci in chartinfos.object_list %}
+          <tr>
+            <td>{{ci.id}}</td>
+            <td><a href="/natal/{{ci.id}}/">{{ci.qname}}</a></td>
+            <td>{{ci.get_gender_display}}</td>
+            <td>{{ci.n_date|date:'Y-m-d H:i'}}</td>
+            <td>{{ci.get_chart_type_display}}</td>
+            <td><a href="/edit/{{ci.id}}/">编辑</a>,<a href="/delete/{{ci.id}}/">删除</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+	</table>
+	<ul class="pagination">
+	  {% if chartinfos.has_previous %}
+	      <li><a href="?page={{ chartinfos.previous_page_number }}">&laquo;</a></li>
+	  {% else %}
+	      <li class="disabled"><a href="#">&laquo;</a></li>
+	  {% endif %}
+	  {% for page_num in chartinfos.paginator.page_range %}
+	  	{% if chartinfos.number ==  page_num %}
+	  	<li class="active"><a href="#">{{page_num}} <span class="sr-only">(current)</span></a></li>
+	  	{% else %}
+	  	<li><a href="?page={{page_num}}">{{page_num}}</a></li>
+	  	{% endif %}
+	  {% endfor %}
+	  {% if chartinfos.has_next %}
+	      <li><a href="?page={{ chartinfos.next_page_number }}">&raquo;</a></li>
+	  {% else %}
+	      <li class="disabled"><a href="#">&raquo;</a></li>
+	  {% endif %}
+	</ul>
+</div>
+{% endblock %}

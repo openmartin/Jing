@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}古典占星-流年星{% endblock %}
+
+{% block css %}
+<link href="/static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block navbarbtn %}
+<form class="navbar-form" method="post" action="/transit/{{cid}}/" style="margin-right: inherit">
+	{% csrf_token %}
+	<div class="form-group">
+        <input class="form-control form_datetime" type="text" value="{{t_date|date:'Y-m-d H:i:s'}}" data-date="{{t_date|date:'Y-m-d H:i:s'}}" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2" readonly>
+    </div>
+		<input type="hidden" name="t_date" id="dtp_input2" value="{{t_date|date:'Y-m-d H:i:s'}}" />
+    <button type="submit" class="btn btn-success">更新</button>
+    <select name="chg_opt" class="form-control" style="width: inherit">
+  	<option value="+" {% if chg_opt == "+" %}selected="selected"{% endif %}>+</option>
+  	<option value="-" {% if chg_opt == "-" %}selected="selected"{% endif %}>-</option>
+	</select>
+	<input type="hidden" name="chg_type" id="chg_type" value="{{chg_type}}" />
+    <button type="button" class="btn btn-success" id="chg_day" >天</button>
+    <button type="button" class="btn btn-success" id="chg_month">月</button>
+    <button type="button" class="btn btn-success" id="chg_year">年</button>
+    
+</form>
+{% endblock %}
+
+
+{% block content %}
+		<div class="container astro-render">
+			<div class="row">
+				<div class="col-md-6">
+					{% autoescape off %}
+					{{chart_svg}}
+					{% endautoescape %}
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-6">
+							{% autoescape off %}
+							{{t_aspect_grid}}
+							{% endautoescape %}
+						</div>
+						<!-- 
+						<div class="col-md-6">
+							<table class="table table-condensed table-striped table-hover">
+								<thead>
+									<th>Aspect</th>
+								</thead>
+								<tbody>
+									{% autoescape off %}
+									{% for table_row in t_atable_data %}
+									<tr>
+										<td> T&nbsp;{{table_row.t_body_svg}}&nbsp;
+										{{table_row.angle_svg}}&nbsp;
+										{{table_row.n_body_svg}}&nbsp;
+										{{table_row.angle_str}} </td>
+										</td>
+									</tr>
+									{% endfor %}
+									{% endautoescape %}
+								</tbody>
+							</table>
+						</div>
+						-->
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<table class="table table-condensed table-striped table-hover">
+								<thead>
+									<th>Transit</th>
+									<th>Longitude</th>
+								</thead>
+								<tbody>
+									{% autoescape off %}
+									{% for table_row in t_ptable_data %}
+									<tr>
+										<td>{{table_row.body_svg}}</td>
+										<td>{{table_row.longitude_svg}}&nbsp;{{table_row.longitude_str}}&nbsp;
+										{% if table_row.longitude_rx %}Rx{% endif %} </td>
+									</tr>
+									{% endfor %}
+									{% endautoescape %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /container -->
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".form_datetime").datetimepicker({
+        language:  'zh-CN',
+        format : 'yyyy-mm-dd hh:ii:ss',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1,
+		minuteStep: 1
+		//pickerPosition: "bottom-left"
+    });
+    
+    $("#chg_day").click(function (e){
+    	$("#chg_type").attr("value", "day");
+    	$(".navbar-form").submit();
+    });
+    $("#chg_month").click(function (e){
+    	$("#chg_type").attr("value", "month");
+    	$(".navbar-form").submit();
+    });
+    $("#chg_year").click(function (e){
+    	$("#chg_type").attr("value", "year");
+    	$(".navbar-form").submit();
+    });
+});
+
+</script>
+{% endblock %}

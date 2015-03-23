@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="古典占星星盘">
+	<meta name="author" content="pengzl">
+	<!--<meta name="google-site-verification" content="Rcw_WiN-e6wEXKLLzptasnOppWdJQDS4TwDu6tEhLMM" /> -->
+
+    <title>{% block title %}古典占星{% endblock %}</title>
+
+   <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="static/bootstrap/3.0.3/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="static/djing.css">
+	
+	{% block css %}{% endblock %}
+  </head>
+  <body>    
+    {% block content %}
+    {% endblock %}
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/jquery-1.9.0.min.js"></script>
+	<script src="static/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	{% block javascript %}{% endblock %}
+  </body>
+</html>

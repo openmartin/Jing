@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}古典占星-本命盘{% endblock %}
+
+{% block css %}
+<link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block navbarbtn %}
+<ul class="nav navbar-nav navbar-right">
+<li><a href="#" id="fsdemo">全屏</a></li>
+<li><a href="#" id="mynote">我的笔记</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="container astro-render">
+	<div class="row">
+		<div class="col-md-6">
+			{% autoescape off %}
+			{{chart_svg}}
+			{% endautoescape %}
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-condensed table-striped table-hover table-bordered" id="n_planet_grid">
+						<thead>
+							<tr>
+							<th rowspan="2">P</th>
+							<th rowspan="2" id="plant_longtitude">黄道经度&运行状态</th>
+							<th rowspan="2">落宫</th>
+							<th rowspan="2">守护宫</th>
+							<th rowspan="2">曜升宫</th>
+							<th colspan="8">先天黄道状态</th>
+							</tr>
+							<tr>
+							<th>本垣</th>
+							<th>曜升</th>
+							<th>三分</th>
+							<th>界</th>
+							<th>十度</th>
+							<th>落</th>
+							<th>陷</th>
+							<th>分数</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% autoescape off %}
+							{% for table_row in ptable_data %}
+							<tr>
+								<td>{{table_row.body_svg}}</td>
+								<td>{{table_row.longitude_svg}}&nbsp;{{table_row.longitude_str}}&nbsp;
+								{% if table_row.longitude_rx %}Rx{% endif %} </td>
+								<td>{{table_row.house_id}}</td>
+								<td>{{table_row.rule_house|join:","}}</td>
+								<td>{{table_row.exalt_house|join:","}}</td>
+								<td>{% if table_row.is_ruler %}+{% endif %}</td>
+								<td>{% if table_row.is_exalt %}+{% endif %}</td>
+								<td>{% if table_row.is_triple %}+{% endif %}</td>
+								<td>{% if table_row.is_term %}+{% endif %}</td>
+								<td>{% if table_row.is_face %}+{% endif %}</td>
+								<td>{% if table_row.is_detr %}-{% endif %}</td>
+								<td>{% if table_row.is_fall %}-{% endif %}</td>
+								<td>{% if table_row.score == None %}N/A{% else %}{{table_row.score}}{% endif %}</td>
+							</tr>
+							{% endfor %}
+							{% endautoescape %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-condensed table-striped table-hover table-bordered" id="n_pattern_grid">
+						<thead>
+							<th>特征</th>
+						</thead>
+						<tbody>
+							{% autoescape off %}
+							{% for table_row in rtable_data %}
+							<tr>
+								<td> {% if table_row.pattern == "mutual" %}
+								{{table_row.body1_svg}}({{table_row.body1_pattern}}) and{{table_row.body2_svg}}({{table_row.body2_pattern}}) 互溶
+								{% endif %}
+								{% if table_row.pattern == "respect" %}
+								{{table_row.body1_svg}}被 {{table_row.body2_svg}}({{table_row.body1_pattern}})接纳
+								{% endif %} </td>
+							</tr>
+							{% endfor %}
+							{% endautoescape %}
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-6">
+					<table class="table table-condensed table-striped table-hover table-bordered" id="n_house_grid">
+						<thead>
+							<th>宫位</th>
+							<th id="plant_longtitude">黄道经度</th>
+							<th>本垣</th>
+							<th>曜升</th>
+						</thead>
+						<tbody>
+							{% autoescape off %}
+							{% for table_row in htable_data %}
+							<tr>
+								<td>House&nbsp;{{table_row.id}}</td>
+								<td>{{table_row.longitude_svg}}&nbsp;{{table_row.longitude_str}}</td>
+								<td>{% for r in table_row.ruler %}{{r}}{% endfor %}</td>
+								<td>{% for e in table_row.exalt %}{{e}}{% endfor %}</td>
+							</tr>
+							{% endfor %}
+							{% endautoescape %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>法达星限</h3>
+		{% for firdaria_planet in firdaria_result %}
+		<div class="col-md-2">
+			<table class="table table-condensed table-striped table-hover table-bordered" id="n_house_grid">
+				<thead>
+					<th>主</th>
+					<th>次</th>
+					<th>起始日期</th>
+				</thead>
+				<tbody>
+					{% autoescape off %}
+					{% for firdaria_row in firdaria_planet %}
+					<tr>
+						<td>{{firdaria_row.main_svg}}</td>
+						<td>{{firdaria_row.sub_svg}}</td>
+						<td>{{firdaria_row.begindt|date:'Y-m-d'}}</td>
+					</tr>
+					{% endfor %}
+					{% endautoescape %}
+				</tbody>
+			</table>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+<!-- /container -->
+<div id="mynote_diaglog" title="我的笔记" style="display: none">
+	<form id="mynoteform" method="post">
+	<div class="form-group">
+		{% csrf_token %}
+  		<textarea class="form-control" name="note" rows="4" id="note">{{ci.note}}</textarea>
+  	</div>
+  	</form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/jquery.fullscreen-min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	var diaglog_show = false;
+	var save_note = "/natal_note/{{cid}}/";
+	var fs_one = false;
+	
+	$("#mynote_diaglog").dialog({
+      autoOpen: false,
+      height: 250,
+      width: 300,
+      modal: false,
+      buttons: {"保存":function(){
+      	$.post(save_note, 
+      		$("#mynoteform").serialize(),
+      		function(date){
+      			if(date.status == 0){
+      				//do nothing
+      			}else{
+      				alert("保存失败!");
+      			}
+      		});
+      	}
+      },
+      close: function() {
+        diaglog_show = false;
+      }
+    });
+	
+
+     $("#mynote")
+     .click(function() {
+     	if(diaglog_show == false){
+        	$( "#mynote_diaglog" ).dialog("open");
+        	diaglog_show = true;
+       	}else{
+       		$( "#mynote_diaglog" ).dialog("close");
+       		diaglog_show = false;
+       	}
+      });
+      
+     $("#fsdemo")
+     .click(function() {
+     	$(document).toggleFullScreen();
+      });
+     
+      $(document).click(function() {
+      	if(fs_one == false){
+     		$(document).fullScreen(true);
+     		fs_one = true;
+     	}else{
+     		//do nothing
+     	}
+      });
+  });
+</script>
+{% endblock %}

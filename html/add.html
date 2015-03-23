@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="古典占星星盘">
+	<meta name="author" content="pengzl">
+	<!--<meta name="google-site-verification" content="Rcw_WiN-e6wEXKLLzptasnOppWdJQDS4TwDu6tEhLMM" /> -->
+
+    <title>古典占星-增加</title>
+
+   <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="static/bootstrap/3.0.3/css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="static/djing.css">
+	
+	
+<link href="static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
+
+  </head>
+  <body>    
+    
+    <div class="container">
+      <div class="row">
+		<form class="form-horizontal" role="form" id="pan_data" method="post" data-toggle="validator">
+		  <h3 class="col-md-offset-1">增加</h3>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="qname">姓名</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="qname" id="qname" value="测试" placeholder="名字" required>
+		      <div class="help-block with-errors"></div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="gender">性别</label>
+		    <div class="col-md-4">
+		      <select class="form-control" name="gender" id="gender">
+		      	  <option value="U" selected="selected">未知</option>
+		      	  <option value="M">男</option>
+				  <option value="F">女</option>
+			  </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="location">地点</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="location" id="location" value="北京" placeholder="北京" required>
+		      <!-- <span class="input-group-addon" id='geosearch'>搜索 </span> -->
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="latitude">纬度</label>
+		    <div class="col-md-4">
+		      <input type="number" class="form-control" name="latitude" id="latitude" value="" placeholder="数字" max="60" min="-60" step="any" data-error="北纬请填写0~60，南纬请填写-60~0，可使用小数" required>
+		      <div class="help-block with-errors"></div>
+		      <!--<span class="help-inline">经度</span> -->
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="longitude">经度</label>
+		    <div class="col-md-4">
+		      <input type="number" class="form-control" name="longitude" id="longitude" value="" placeholder="数字" max="180" min="-180" step="any" data-error="东经请填写0~180，西经请填写-180~0，可使用小数"  required>
+		      <div class="help-block with-errors"></div>
+		      <!--<span class="help-inline">纬度</span> -->
+		    </div>
+		  </div>
+		 <div class="form-group">
+                <label class="col-md-2 control-label" for="longitude">出生时间</label>
+                <div class="input-group date form_datetime col-md-4" data-date="1990-03-01 00:00" data-date-format="yyyy-mm-dd hh:ii" >
+                    <input class="form-control" name="n_date" id="dtp_input1" type="text" value="1990-03-01 00:00" readonly required>
+                    <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+				<div class="help-block with-errors"></div>
+          </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="n_tz">时区</label>
+		    <div class="col-md-4">
+		      <select name="n_tz" class="form-control">
+				<option value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
+				<option value="-11">(GMT -11:00) Midway Island, Samoa</option>
+				<option value="-10">(GMT -10:00) Hawaii</option>
+				<option value="-9">(GMT -09:00) Alaska</option>
+				<option value="-8">(GMT -08:00) Pacific Time (US &amp; Canada), Tijuana</option>
+				<option value="-7">(GMT -07:00) Mountain Time (US &amp; Canada), Arizona</option>
+				<option value="-6">(GMT -06:00) Central Time (US &amp; Canada), Mexico City</option>
+				<option value="-5">(GMT -05:00) Eastern Time (US &amp; Canada), Bogota, Lima, Quito</option>
+				<option value="-4">(GMT -04:00) Atlantic Time (Canada), Caracas, La Paz</option>
+				<option value="-3.5">(GMT -03:30) Newfoundland</option>
+				<option value="-3">(GMT -03:00) Brassila, Buenos Aires, Georgetown, Falkland Is</option>
+				<option value="-2">(GMT -02:00) Mid-Atlantic, Ascension Is., St. Helena</option>
+				<option value="-1">(GMT -01:00) Azores, Cape Verde Islands</option>
+				<option value="0">(GMT) Casablanca, Dublin, Edinburgh, London, Lisbon, Monrovia</option>
+				<option value="1">(GMT +01:00) Amsterdam, Berlin, Brussels, Madrid, Paris, Rome</option>
+				<option value="2">(GMT +02:00) Cairo, Helsinki, Kaliningrad, South Africa</option>
+				<option value="3">(GMT +03:00) Baghdad, Riyadh, Moscow, Nairobi</option>
+				<option value="3.5">(GMT +03:30) Tehran</option>
+				<option value="4">(GMT +04:00) Abu Dhabi, Baku, Muscat, Tbilisi</option>
+				<option value="4.5">(GMT +04:30) Kabul</option>
+				<option value="5">(GMT +05:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+				<option value="5.5">(GMT +05:30) Bombay, Calcutta, Madras, New Delhi</option>
+				<option value="5.75">(GMT +05:45) Katmandu</option>
+				<option value="6">(GMT +06:00) Almaty, Colombo, Dhaka, Novosibirsk</option>
+				<option value="6.5">(GMT +06:30) Rangoon</option>
+				<option value="7">(GMT +07:00) Bangkok, Hanoi, Jakarta</option>
+				<option value="8" selected="selected">(GMT +08:00) 北京(Beijing), Hong Kong, Perth, Singapore, Taipei</option>
+				<option value="9">(GMT +09:00) Osaka, Sapporo, Seoul, Tokyo, Yakutsk</option>
+				<option value="9.5">(GMT +09:30) Adelaide, Darwin</option>
+				<option value="10">(GMT +10:00) Canberra, Guam, Melbourne, Sydney, Vladivostok</option>
+				<option value="11">(GMT +11:00) Magadan, New Caledonia, Solomon Islands</option>
+				<option value="12">(GMT +12:00) Auckland, Wellington, Fiji, Marshall Island</option>
+			  </select>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="col-md-2 control-label" for="hsys">分宫制</label>
+		    <div class="col-md-4">
+		      <select class="form-control" name="hsys" id="hsys">
+		      	  <option value="B" selected="selected">Alcabitus 阿卡比特分宫制</option>
+		      	  <option value="P">Placidus 普拉西分宫制</option>
+				  <option value="E">Equal 等宫制</option>
+			  </select>
+		      <!--<span class="help-inline">分宫制</span> -->
+		    </div>
+		  </div>
+		  <input type="hidden" name="chart_type" id="chart_type" value="N" />
+          <input type="hidden" name="user" id="user" value="" />
+          <input type="hidden" name="is_pub" id="is_pub" value="N" />
+          <div class="form-group">
+		  <div class="form-actions col-md-offset-2 col-md-4">
+		  <button type="submit" class="btn btn-primary">保存</button>
+		  </div>
+		  </div>
+		</form>
+      </div>
+    </div> 
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/jquery-1.9.0.min.js"></script>
+	<script src="static/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript" src="static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="static/bootstrap-validator/validator.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $(".form_datetime").datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1,
+		minuteStep: 1,
+		pickerPosition: "bottom-left"
+    });
+
+
+
+    /* form data pass to python */
+	$("form").validator().on("submit", function(event) {
+        if (event.isDefaultPrevented()) {
+            //pass
+        }else{
+        	event.preventDefault();
+			qs = $(this).serialize();
+			data_json = {"action":"add", "data":qs}
+			pyObj.passPara(JSON.stringify(data_json));
+        }
+
+	});
+
+});
+
+
+</script>
+
+  </body>
+</html>

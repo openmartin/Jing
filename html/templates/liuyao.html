@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}六爻起卦{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<form class="form-horizontal" role="form" id="liuyao" method="post" action="/jiegua">
+			{% csrf_token %} <h3 class="col-lg-offset-1">六爻</h3>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="month">月建</label>
+				<div class="col-lg-2">
+					{{lyf.month}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">日辰</label>
+				<div class="col-lg-2">
+					{{lyf.day}}
+				</div>
+			</div>
+
+			<hr />
+			
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="shen">用神</label>
+				<div class="col-lg-2">
+					{{lyf.shen}}
+				</div>
+			</div>
+			
+			<hr />
+			
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">上爻</label>
+				<div class="col-lg-2">
+					{{lyf.shang}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">五爻</label>
+				<div class="col-lg-2">
+					{{lyf.wu}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">四爻</label>
+				<div class="col-lg-2">
+					{{lyf.si}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">三爻</label>
+				<div class="col-lg-2">
+					{{lyf.san}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">二爻</label>
+				<div class="col-lg-2">
+					{{lyf.er}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label" for="day">初爻</label>
+				<div class="col-lg-2">
+					{{lyf.chu}}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="form-actions col-lg-offset-2 col-lg-4">
+					<button type="submit" class="btn btn-primary">
+						解卦
+					</button>
+				</div>
+			</div>
+
+	</div>
+</div>
+{% endblock %}
