@@ -48,6 +48,11 @@ def testshow():
 
     return "html/natal.html"
 
+def delete(data):
+    ci = ChartInfo.objects.get(id=data)
+    ci.delete()
+
+
 def add():
     
     h = render_to_string("add.html",{"current":"add"})
@@ -57,6 +62,12 @@ def add():
     f.close()
 
     return "html/add.html"
+
+def edit(ci):
+    pass
+
+def edit_action(qs):
+    pass
 
 def add_action(qs):
     """chartinfo insert into db"""
@@ -92,12 +103,10 @@ def add_action(qs):
     ci.save()
     
 
-def list():
+def list(page=1):
     mycharts = ChartInfo.objects.all()
     
     paginator = Paginator(mycharts, 10) # Show 25 contacts per page
-
-    page = 1
 
     try:
         chartinfos = paginator.page(page)

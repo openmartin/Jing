@@ -38,14 +38,33 @@ class BridgeClass(QtCore.QObject):
         
         if action == "add":
             self.add_action(action_data)
+        if action == "show":
+            self.show(action_data)
+        if action == "edit":
+            self.edit(action_data)
         if action == "delete":
-            pass
+            self.delete(action_data)
+        if action == "page":
+            self.list(action_data)
 
     def add_action(self, data):
         views.add_action(data)
+        self.window.list()
 
-    def delete(self, str):
-        pass
+    def show(self, data):
+        self.window.show(data)
+
+    def edit(self, data):
+        self.window.edit(data)
+
+    def delete(self, data):
+        views.delete(data)
+        self.window.list()
+
+    def list(self, data):
+        self.window.list(page=int(data))
+
+
 
 
 class MainWindow(QtGui.QWidget):
@@ -189,16 +208,21 @@ class MainWindow(QtGui.QWidget):
     def setBridge(self, bridge):
         self.bridgeObj = bridge
     
-    def showchart(self):
-        passk 
+    def show(self, ci):
+        tmp_html = views.show()
+        self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def add(self):
         print "button two press!!!"
         tmp_html = views.add()
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
-    def list(self):
-        tmp_html = views.list()
+    def edit(self, ci):
+        tmp_html = views.edit()
+        self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
+
+    def list(self, page=1):
+        tmp_html = views.list(page)
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def showone(self):

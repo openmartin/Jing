@@ -20,18 +20,18 @@
           {% for ci in chartinfos.object_list %}
           <tr>
             <td>{{ci.id}}</td>
-            <td><a href="/natal/{{ci.id}}/">{{ci.qname}}</a></td>
+            <td><a href="/natal/{{ci.id}}/" target="python" action="show" data="{{ci.id}}">{{ci.qname}}</a></td>
             <td>{{ci.get_gender_display}}</td>
             <td>{{ci.n_date|date:'Y-m-d H:i'}}</td>
             <td>{{ci.get_chart_type_display}}</td>
-            <td><a href="/edit/{{ci.id}}/">编辑</a>,<a href="/delete/{{ci.id}}/">删除</a></td>
+            <td><a href="/edit/{{ci.id}}/" target="python" action="edit" data="{{ci.id}}">编辑</a>,<a href="/delete/{{ci.id}}/" target="python" action="delete" data="{{ci.id}}">删除</a></td>
           </tr>
           {% endfor %}
         </tbody>
 	</table>
 	<ul class="pagination">
 	  {% if chartinfos.has_previous %}
-	      <li><a href="?page={{ chartinfos.previous_page_number }}">&laquo;</a></li>
+	      <li><a href="?page={{ chartinfos.previous_page_number }}" target="python" action="page" data="{{chartinfos.previous_page_number}}">&laquo;</a></li>
 	  {% else %}
 	      <li class="disabled"><a href="#">&laquo;</a></li>
 	  {% endif %}
@@ -39,14 +39,30 @@
 	  	{% if chartinfos.number ==  page_num %}
 	  	<li class="active"><a href="#">{{page_num}} <span class="sr-only">(current)</span></a></li>
 	  	{% else %}
-	  	<li><a href="?page={{page_num}}">{{page_num}}</a></li>
+	  	<li><a href="?page={{page_num}}" target="python" action="page" data="{{page_num}}">{{page_num}}</a></li>
 	  	{% endif %}
 	  {% endfor %}
 	  {% if chartinfos.has_next %}
-	      <li><a href="?page={{ chartinfos.next_page_number }}">&raquo;</a></li>
+	      <li><a href="?page={{ chartinfos.next_page_number }}" target="python" action="page" data="{{chartinfos.next_page_number}}">&raquo;</a></li>
 	  {% else %}
 	      <li class="disabled"><a href="#">&raquo;</a></li>
 	  {% endif %}
 	</ul>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $("a[target=python]").each(function(){
+        $(this).click(function(event){
+            data = $(this).attr("data");
+            action = $(this).attr("action");
+            data_json = {"action":action, "data":data};
+            pyObj.passPara(JSON.stringify(data_json));
+            event.preventDefault();
+        });
+    });
+});
+</script>
 {% endblock %}
