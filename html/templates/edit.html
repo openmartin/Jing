@@ -2,24 +2,23 @@
 
 {% block title %}古典占星-编辑{% endblock %}
 {% block css %}
-<link href="/static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=45a7f8824904cd76965c78be58436e2d" charset="UTF-8"></script>
+<link href="static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block content %}
     <div class="container">
       <div class="row">
-		<form class="form-horizontal" role="form" id="pan_data" method="post" action="/save/{{ci.id}}/">{% csrf_token %}
-		  <h3 class="col-lg-offset-1">编辑</h3>
+		<form class="form-horizontal" role="form" id="pan_data" method="post" action="/save/{{ci.id}}/" data-toggle="validator">
+		  <h3 class="col-md-offset-1">编辑</h3>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="qname">姓名</label>
-		    <div class="col-lg-4">
-		      <input type="text" class="form-control" name="qname" id="qname" value="{{ci.qname}}" placeholder="名字">
+		    <label class="col-md-2 control-label" for="qname">姓名</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="qname" id="qname" value="{{ci.qname}}" placeholder="名字" required>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="gender">性别</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="gender">性别</label>
+		    <div class="col-md-4">
 		      <!--<select class="form-control" name="gender" id="gender">
 		      	  <option value="M">男</option>
 				  <option value="F">女</option>
@@ -29,44 +28,36 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="location">地点</label>
-		    <div class="col-lg-4 input-group">
-		      <input type="text" class="form-control" name="location" id="location" value="{{ci.location}}" placeholder="">
-		      <span class="input-group-addon" id='geosearch'>搜索 </span>
+		    <label class="col-md-2 control-label" for="location">地点</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="location" id="location" value="{{ci.location}}" placeholder="" required>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		  	<label class="col-lg-2 control-label" >地图</label>
-		  	<div class="col-lg-4 input-group">
-		  		<div id="ditu" style="height:200px; width: 400px"></div>
-		  	</div>
-		  </div>
-		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="latitude">纬度</label>
-		    <div class="col-lg-4">
-		      <input type="text" class="form-control" name="latitude" id="latitude" value="{{ci.latitude}}" placeholder="数字">
+		    <label class="col-md-2 control-label" for="latitude">纬度</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="latitude" id="latitude" value="{{ci.latitude}}" placeholder="数字" max="60" min="-60" step="any" data-error="北纬请填写0~60，南纬请填写-60~0，可使用小数" required>
 		      <!--<span class="help-inline">经度</span> -->
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="longitude">经度</label>
-		    <div class="col-lg-4">
-		      <input type="text" class="form-control" name="longitude" id="longitude" value="{{ci.longitude}}" placeholder="数字">
+		    <label class="col-md-2 control-label" for="longitude">经度</label>
+		    <div class="col-md-4">
+		      <input type="text" class="form-control" name="longitude" id="longitude" value="{{ci.longitude}}" placeholder="数字" max="180" min="-180" step="any" data-error="东经请填写0~180，西经请填写-180~0，可使用小数"  required>
 		      <!--<span class="help-inline">纬度</span> -->
 		    </div>
 		  </div>
 		 <div class="form-group">
-                <label class="col-lg-2 control-label" for="longitude">出生时间</label>
-                <div class="input-group date form_datetime col-lg-4" data-date="{{ci.n_date|date:'Y-m-d H:i:s'}}" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
-                    <input class="form-control"  type="text" value="{{ci.n_date|date:'Y-m-d H:i:s'}}" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <label class="col-md-2 control-label" for="longitude">出生时间</label>
+                <div class="input-group date form_datetime col-md-4" data-date="{{ci.n_date|date:'Y-m-d H:i'}}" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control"  type="text" name="n_date" id="dtp_input1" value="{{ci.n_date|date:'Y-m-d H:i'}}" readonly>
+                    <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> -->
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
-					<input type="hidden" name="n_date" id="dtp_input1" value="{{ci.n_date|date:'Y-m-d H:i:s'}}" />
           </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="n_tz">时区</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="n_tz">时区</label>
+		    <div class="col-md-4">
 		      <select name="n_tz" class="form-control">
 				<option value="-12" {% if ci.n_tz == -12 %}selected="selected"{% endif %}>(GMT -12:00) Eniwetok, Kwajalein</option>
 				<option value="-11" {% if ci.n_tz == -11 %}selected="selected"{% endif %}>(GMT -11:00) Midway Island, Samoa</option>
@@ -104,20 +95,20 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="hsys">分宫制</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="hsys">分宫制</label>
+		    <div class="col-md-4">
 		      {{cif.hsys}}
 		    </div>
 		  </div>
-		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="chart_type">盘类型</label>
-		    <div class="col-lg-4">
+		 <!--  <div class="form-group">
+		    <label class="col-md-2 control-label" for="chart_type">盘类型</label>
+		    <div class="col-md-4">
 		      {{cif.chart_type}}
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="t_date">流年日期</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="t_date">流年日期</label>
+		    <div class="col-md-4">
 		      <div class="date form_datetime" data-date="1990-03-01 00:00:00" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input2">
                     <input class="form-control"  type="text" value="{{ci.t_date|date:'Y-m-d H:i:s'}}" readonly>
                     <span class="add-on"><i class="icon-remove"></i></span>
@@ -127,27 +118,27 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="is_pub">是否公开</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="is_pub">是否公开</label>
+		    <div class="col-md-4">
 		      {{cif.is_pub}}
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="note">私人笔记</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="note">私人笔记</label>
+		    <div class="col-md-4">
 		      <textarea class="form-control" name="note" rows="3" id="note">{{ci.note}}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="col-lg-2 control-label" for="pubnote">公开笔记</label>
-		    <div class="col-lg-4">
+		    <label class="col-md-2 control-label" for="pubnote">公开笔记</label>
+		    <div class="col-md-4">
               <textarea class="form-control" name="note" rows="3" id="pubnote">{{ci.pubnote}}</textarea>
 		    </div>
-		  </div>
+		  </div> -->
 		  <input type="hidden" name="id" id="user" value="{{ci.id}}" />
-          <input type="hidden" name="user" id="user" value="{{request.siteuser.id}}" />
+          <!-- <input type="hidden" name="user" id="user" value="{{request.siteuser.id}}" /> -->
           <div class="form-group">
-		  <div class="form-actions col-lg-offset-2 col-lg-4">
+		  <div class="form-actions col-md-offset-2 col-md-4">
 		  <button type="submit" class="btn btn-primary">保存</button>
 		  </div>
 		  </div>
@@ -156,21 +147,10 @@
     </div> 
 {% endblock %}
 {% block javascript %}
-<script type="text/javascript" src="/static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="static/bootstrap-validator/validator.js" charset="UTF-8"></script>
 <script type="text/javascript">
-
-var map = new BMap.Map("ditu");  // 创建Map实例
-var beijing = new BMap.Point(116.39564503788, 39.92998577808);
-map.centerAndZoom(beijing, 10);     // 初始化地图,设置中心点坐标和地图级别
-map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
-map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
-map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
-map.enableScrollWheelZoom();                            //启用滚轮放大缩小
-map.addControl(new BMap.MapTypeControl());          //添加地图类型控件
-
-var marker = new BMap.Marker(beijing);        // 创建标注    
-map.addOverlay(marker);                     // 将标注添加到地图中 
 
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
@@ -182,27 +162,23 @@ $(document).ready(function() {
 		startView: 2,
 		forceParse: 0,
         showMeridian: 1,
-		minuteStep: 1
+		minuteStep: 1,
+        pickerPosition: "bottom-left"
     });
     
-    //地理位置查询
-    $("#geosearch").click(function(e){
-    	geoaddr = $("#location")[0].value;
-    	map.setCenter(geoaddr);
-    	
-    	para = {address:encodeURIComponent(geoaddr)};
-    	$.get("/geocoding", para,
-    		function(data){
-    			lat = data.result.location.lat;
-    			lng = data.result.location.lng;
-    			var point = new BMap.Point(lng, lat);
-    			var marker = new BMap.Marker(point);        // 创建标注    
-				map.addOverlay(marker);                     // 将标注添加到地图中 
+    /* form data pass to python */
+    $("form").validator().on("submit", function(event) {
+        if (event.isDefaultPrevented()) {
+            //pass
+        }else{
+            event.preventDefault();
+            qs = $(this).serialize();
+            data_json = {"action":"edit_action", "data":qs}
+            pyObj.passPara(JSON.stringify(data_json));
+        }
 
-    			$("#latitude")[0].value = lat;
-    			$("#longitude")[0].value = lng;
-    		});
     });
+
   });
 </script>
 {% endblock %}

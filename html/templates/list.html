@@ -20,7 +20,7 @@
           {% for ci in chartinfos.object_list %}
           <tr>
             <td>{{ci.id}}</td>
-            <td><a href="/natal/{{ci.id}}/" target="python" action="show" data="{{ci.id}}">{{ci.qname}}</a></td>
+            <td><a href="/natal/{{ci.id}}/" target="python" action="natal" data="{{ci.id}}">{{ci.qname}}</a></td>
             <td>{{ci.get_gender_display}}</td>
             <td>{{ci.n_date|date:'Y-m-d H:i'}}</td>
             <td>{{ci.get_chart_type_display}}</td>

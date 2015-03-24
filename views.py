@@ -14,7 +14,7 @@ from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.encoding import smart_unicode
 from djing.natal_render import NatalSvg
-from djing.models import ChartInfo
+from djing.models import ChartInfo, ChartInfoForm
 from djing.models import getChartSets
 from djing.utils import UserDefTZ
 
@@ -48,6 +48,35 @@ def testshow():
 
     return "html/natal.html"
 
+def natal(data):
+    cid = data
+    ci = ChartInfo.objects.get(id=data)
+    natal = NatalSvg()
+    cs = getChartSets(None)
+    natal.load_conf(cs)
+    natal.load_data(ci)
+    
+    svg_xml = natal.render()
+    (ptable_data, htable_data, rtable_data) = natal.calc_planet_table_data()
+    firdaria_result = natal.firdaria()
+    
+
+    h = render_to_string("natal.html",{"current":"natal",
+         "chart_svg":svg_xml,
+         "ptable_data":ptable_data,
+         "htable_data":htable_data,
+         "rtable_data":rtable_data,
+         "firdaria_result":firdaria_result,
+         "cid": cid,
+         "ci":ci})
+
+    f = codecs.open('html/natal.html', 'w', 'utf-8')
+    f.write(h)
+    f.close()
+
+    return "html/natal.html"
+
+
 def delete(data):
     ci = ChartInfo.objects.get(id=data)
     ci.delete()
@@ -63,11 +92,48 @@ def add():
 
     return "html/add.html"
 
-def edit(ci):
-    pass
+def edit(data):
+    ci = ChartInfo.objects.get(id=data)
+    cif = ChartInfoForm(instance=ci)
+
+    h = render_to_string("edit.html", {"ci":ci,"cif":cif})
+
+    f = codecs.open('html/edit.html', 'w', 'utf-8')
+    f.write(h)
+    f.close()
+
+    return "html/edit.html"
+
 
 def edit_action(qs):
-    pass
+    qd = urlparse.parse_qs(qs.decode("iso-8859-1").encode("utf-8"))
+    cid = qd["id"][0]
+    qname = qd["qname"][0]
+    gender = qd["gender"][0]
+    location = qd["location"][0]
+    latitude = float(qd["latitude"][0])
+    longitude = float(qd["longitude"][0])
+    n_date = datetime.strptime(qd["n_date"][0], '%Y-%m-%d %H:%M')
+    n_tz = int(qd["n_tz"][0])
+    hsys = qd["hsys"][0]
+    
+    tz = UserDefTZ(n_tz)
+    n_date_tz = datetime(n_date.year,n_date.month,n_date.day,
+        n_date.hour, n_date.minute, n_date.second,
+        n_date.microsecond, tz)
+
+    ci = ChartInfo.objects.get(id=cid)
+    ci.qname = qname
+    ci.gender = gender
+    ci.location = location
+    ci.latitude = latitude
+    ci.longitude = longitude
+    ci.n_date = n_date_tz
+    ci.n_tz = n_tz
+    ci.hsys = hsys
+
+    ci.save()
+
 
 def add_action(qs):
     """chartinfo insert into db"""

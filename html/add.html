@@ -124,7 +124,7 @@
 		    </div>
 		  </div>
 		  <input type="hidden" name="chart_type" id="chart_type" value="N" />
-          <input type="hidden" name="user" id="user" value="" />
+          <!-- <input type="hidden" name="user" id="user" value="" /> -->
           <input type="hidden" name="is_pub" id="is_pub" value="N" />
           <div class="form-group">
 		  <div class="form-actions col-md-offset-2 col-md-4">
@@ -170,7 +170,7 @@ $(document).ready(function() {
         }else{
         	event.preventDefault();
 			qs = $(this).serialize();
-			data_json = {"action":"add", "data":qs}
+			data_json = {"action":"add_action", "data":qs}
 			pyObj.passPara(JSON.stringify(data_json));
         }
 

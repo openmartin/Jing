@@ -36,12 +36,14 @@ class BridgeClass(QtCore.QObject):
         print action_data
         print sys.getdefaultencoding()
         
-        if action == "add":
+        if action == "add_action":
             self.add_action(action_data)
-        if action == "show":
-            self.show(action_data)
+        if action == "natal":
+            self.natal(action_data)
         if action == "edit":
             self.edit(action_data)
+        if action == "edit_action":
+            self.edit_action(action_data)
         if action == "delete":
             self.delete(action_data)
         if action == "page":
@@ -51,11 +53,15 @@ class BridgeClass(QtCore.QObject):
         views.add_action(data)
         self.window.list()
 
-    def show(self, data):
-        self.window.show(data)
+    def natal(self, data):
+        self.window.natal(data)
 
     def edit(self, data):
         self.window.edit(data)
+
+    def edit_action(self, data):
+        views.edit_action(data)
+        self.window.list()
 
     def delete(self, data):
         views.delete(data)
@@ -208,8 +214,8 @@ class MainWindow(QtGui.QWidget):
     def setBridge(self, bridge):
         self.bridgeObj = bridge
     
-    def show(self, ci):
-        tmp_html = views.show()
+    def natal(self, data):
+        tmp_html = views.natal(data)
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def add(self):
@@ -217,8 +223,8 @@ class MainWindow(QtGui.QWidget):
         tmp_html = views.add()
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
-    def edit(self, ci):
-        tmp_html = views.edit()
+    def edit(self, data):
+        tmp_html = views.edit(data)
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def list(self, page=1):
