@@ -16,11 +16,11 @@ pip
 安装pyside
 ------------------
 
-在Ubuntu 和　DeepinLinux　下安装非常方便
+在Ubuntu 和　DeepinLinux　下安装非常方便::
 
     sudo apt-get install python-pyside
 
-或者使用pip安装
+或者使用pip安装::
 
     sudo pip install pyside
 
@@ -28,7 +28,7 @@ pip
 创建窗口
 -------------------
 
-学习所有的GUI程序，第一步都是创建一个窗口，下面的程序创建了一个无边框的窗口。
+学习所有的GUI程序，第一步都是创建一个窗口，下面的程序创建了一个无边框的窗口。::
 
     class MainWindow(QtGui.QWidget):
         def __init__(self):
