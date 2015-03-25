@@ -79,16 +79,16 @@ pip
 --------------------
 pyside有三种设计UI的方式
 
-* 手工编码,编码layout+widget
-* xml定义(使用Qt Designer)
-* QtQuick/QML定义(使用Qt Creator)，在QT5下更好用,QT4还不完善
+# 手工编码,编码layout+widget
+# xml定义(使用Qt Designer)
+# QtQuick/QML定义(使用Qt Creator)，在QT5下更好用,QT4还不完善
 
 
 查找帮助
 --------------------
 
 网上pyside的资料不多，我们该怎么查找资料呢？
-QT Creator是QT的官方IDE，里面有官方的帮助文档，C++，不过pyside的函数名是一模一样的，功能也保持一致。
+Qt Creator是Qt的官方IDE，里面有官方的帮助文档，C++，不过pyside的函数名是一模一样的，功能也保持一致。
 
 pyside的API文档也是很好的参考资料　http://pyside.github.io/docs/pyside/
 
@@ -106,13 +106,28 @@ Qt WebKit is the port of WebKit on top of Qt. QtWebKit relies on the public APIs
 Qt Webkit Bridge
 ---------------------
 
-在Web环境中，web和后端的交互是通过http协议,但是在qtwebkit中怎么样才能和webkit中的网页交互。
+在Web环境中，web和后端的交互是通过http协议,但是在qtwebkit中python怎么样才能和webkit中的网页交互呢?
+
 Qt　提供了一个机制　Qt Webkit Bridge来实现这个功能。
 
 有两个特别的函数,实现这个功能
 
-让javascript调用python方法　QtWebKit.QWebView().page().mainFrame().addToJavaScriptWindowObject("pyObj", pyObj)
+*让javascript调用python方法　QtWebKit.QWebView().page().mainFrame().addToJavaScriptWindowObject("pyObj", pyObj)*
 
-python中调用javascript函数　QtWebKit.QWebView().page().mainFrame().evaluateJavaScript("alert('Hello World!');")
+*python中调用javascript函数　QtWebKit.QWebView().page().mainFrame().evaluateJavaScript("alert('Hello World!');")*
+
+
+实例
+-----------------------
+
+下面实现一个例子增删改查的例子
+
+pyside+django template+django model　crud demo
+
+django project
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+list.html
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
