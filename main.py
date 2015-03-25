@@ -232,7 +232,7 @@ class MainWindow(QtGui.QWidget):
 
     def showone(self):
         tmp_html = views.testshow()
-        self.html_render.load(tmp_html, baseurl="file:///~/Jing/html")
+        self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def maxSize(self):
         self.showMaximized()
