@@ -16,3 +16,6 @@ Use webkit + html5 + javascript
 	python manage.py syncdb
 	python main.py
 
+# TODO
+More Astro Chart
+UI
