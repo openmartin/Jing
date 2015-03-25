@@ -1,5 +1,5 @@
 sudo apt-get install python2.7-dev
 sudo apt-get install python-pip
+sudo apt-get install sqlitebrowser
 sudo pip install pyswisseph
 sudo pip install django pytz dateutils
-sudo apt-get install python-pyside
