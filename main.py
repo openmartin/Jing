@@ -28,13 +28,13 @@ class BridgeClass(QtCore.QObject):
     @QtCore.Slot(str)
     def passPara(self, msg):
         print msg
-        QtGui.QMessageBox.information(self.window, "Info", msg)
+        #QtGui.QMessageBox.information(self.window, "Info", msg)
         order = json.loads(msg)
         action = order["action"]
         print action
         action_data = order["data"]
         print action_data
-        print sys.getdefaultencoding()
+        #print sys.getdefaultencoding()
         
         if action == "add_action":
             self.add_action(action_data)
@@ -219,7 +219,6 @@ class MainWindow(QtGui.QWidget):
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
     def add(self):
-        print "button two press!!!"
         tmp_html = views.add()
         self.html_render.load(tmp_html, baseurl=WEBKIT_RESOURCE_PATH)
 
@@ -233,7 +232,6 @@ class MainWindow(QtGui.QWidget):
 
     def showone(self):
         tmp_html = views.testshow()
-        print tmp_html
         self.html_render.load(tmp_html, baseurl="file:///~/Jing/html")
 
     def maxSize(self):

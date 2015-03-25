@@ -17,5 +17,4 @@ Use webkit + html5 + javascript
 	python main.py
 
 # TODO
-More Astro Chart
-UI
+More astro chart and new UI
