@@ -1,0 +1,4 @@
+Django==1.6.1
+dateutils==0.6.6
+pyswisseph==2.00.00-2
+pytz==2015.2
